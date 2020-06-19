@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".PlayerMasteryView">
 
+    <TextView
+        android:id="@+id/textView_temp"
+        android:layout_width="379dp"
+        android:layout_height="692dp"
+        android:text="@string/not_available"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="19dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

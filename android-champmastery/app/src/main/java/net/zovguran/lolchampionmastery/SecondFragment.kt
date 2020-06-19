@@ -25,7 +25,16 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            saveData()
+            closeSettings()
         }
+    }
+
+    fun saveData() {
+        //TODO("Save entered API key.")
+    }
+
+    private fun closeSettings() {
+        findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
     }
 }
