@@ -8,9 +8,40 @@
 
     <TextView
         android:id="@+id/textView_temp"
-        android:layout_width="379dp"
-        android:layout_height="692dp"
+        android:layout_width="374dp"
+        android:layout_height="175dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/not_available"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="19dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_profilePicture"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView_summonername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/placeholder_summonername"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_profilePicture"
+        app:layout_constraintTop_toTopOf="@+id/imageView_profilePicture" />
+
+    <TextView
+        android:id="@+id/textView_summonerLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/textView_summonername"
+        app:layout_constraintTop_toBottomOf="@+id/textView_summonername" />
 </androidx.constraintlayout.widget.ConstraintLayout>

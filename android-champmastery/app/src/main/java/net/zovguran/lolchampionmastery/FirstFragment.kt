@@ -37,6 +37,8 @@ class FirstFragment : Fragment() {
         button_settings.setOnClickListener {
             openSettings()
         }
+
+        editText_search.setText(R.string.default_summonername)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
