@@ -3,6 +3,7 @@ package net.zovguran.lolchampionmastery
 import android.net.Uri.encode
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.preference.PreferenceManager
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -11,19 +12,23 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_player_mastery_view.*
 import org.json.JSONObject
 
+private const val API_KEY = "api_key"
+
 class PlayerMasteryView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_mastery_view)
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+
         textView_summonerLevel.text = getString(R.string.player_level, "0")
 
         val summonername = intent.getStringExtra("summonername")
 
-        val api_base: String = "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"
-        val apiKey: String = "KEY HERE"
+        val apiBase: String = "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"
+        val apiKey: String = prefs.getString(API_KEY, null) ?: ""
         val url: String =
-            "$api_base${encode(summonername, "application/x-www-form-urlencoded")}?api_key=$apiKey"
+            "${apiBase}${encode(summonername, "application/x-www-form-urlencoded")}?api_key=$apiKey"
 
         textView_temp.text = "Loading...\n$url"
 

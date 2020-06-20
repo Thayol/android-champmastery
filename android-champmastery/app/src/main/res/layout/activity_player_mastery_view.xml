@@ -44,4 +44,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/textView_summonername"
         app:layout_constraintTop_toBottomOf="@+id/textView_summonername" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="net.zovguran.lolchampionmastery.MasteryPointsListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profilePicture" />
 </androidx.constraintlayout.widget.ConstraintLayout>
