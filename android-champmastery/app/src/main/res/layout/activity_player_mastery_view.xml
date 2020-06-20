@@ -8,9 +8,10 @@
 
     <TextView
         android:id="@+id/textView_temp"
-        android:layout_width="374dp"
-        android:layout_height="175dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:autoLink="web"
+        android:scrollbars="vertical"
         android:text="@string/not_available"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_summonername" />
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/fragment_list"
         android:name="net.zovguran.lolchampionmastery.MasteryPointsListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"

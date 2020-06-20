@@ -4,6 +4,10 @@
     <string name="settings">Settings</string>
     <string name="mastery_view_label">Player Mastery</string>
 
+    <string name="api_summoner_base">https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/</string>
+    <string name="api_mastery_base">https://eun1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/</string>
+    <string name="api_static_icons_root">http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/</string>
+
     <string name="default_summonername">in Clitoris</string>
     <string name="placeholder_summonername">Loading...</string>
     <string name="player_level">Level %1$s</string>
