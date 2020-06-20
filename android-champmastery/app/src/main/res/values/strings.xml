@@ -2,6 +2,7 @@
 
     <string name="app_name">LoL Champion Mastery</string>
     <string name="settings">Settings</string>
+    <string name="mastery_view_label">Player Mastery</string>
 
     <string name="default_summonername">in Clitoris</string>
     <string name="placeholder_summonername">Loading...</string>
@@ -24,6 +25,7 @@
 
     <string name="text_riot_api_signup_url">You can get your free Riot Developer API key if you sign up for an account for free:\n https://developer.riotgames.com/</string>
     <string name="profile_picture">Profile Picture</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_cancel">Cancel</string>

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlayerMasteryView"></activity>
+        <activity
+            android:name=".PlayerMasteryView"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/mastery_view_label"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
