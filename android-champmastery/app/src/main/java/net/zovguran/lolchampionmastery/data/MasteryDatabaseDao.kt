@@ -25,4 +25,7 @@ interface MasteryDatabaseDao {
 
     @Query("SELECT * FROM mastery_records_table WHERE summoner_id = :summonerId ORDER BY champion_points DESC")
     fun getLiveMasteryScoreBySummonerId(summonerId: String): LiveData<List<MasteryRecord>>
+
+    @Query("SELECT DISTINCT summoner_name FROM mastery_records_table")
+    fun getStoredSummonerNames() : List<String>
 }

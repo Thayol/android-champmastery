@@ -9,8 +9,11 @@
     <string name="api_static_icons_root">http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/</string>
 
     <string name="default_summonername">in Clitoris</string>
-    <string name="placeholder_summonername">Loading...</string>
+    <string name="placeholder_summonername">Loading…</string>
     <string name="player_level">Level %1$s</string>
+
+    <string name="fetch_error_1">Invalid summoner name</string>
+    <string name="fetch_error_2">or API key expired.</string>
 
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -33,4 +36,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_cancel">Cancel</string>
+    <string name="content_description_mastery_icon">Mastery Icon</string>
+    <string name="content_description_champion_icon">Champion Icon</string>
+    <string name="placeholder_champion_name">Ahri</string>
+    <string name="placeholder_champion_points">5 000 000</string>
 </resources>

@@ -7,9 +7,10 @@
     tools:context=".PlayerMasteryView">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textView_temp"
         android:layout_width="0dp"
-        android:layout_height="500dp"
+        android:layout_height="100dp"
         android:autoLink="web"
         android:scrollbars="vertical"
         android:text="@string/not_available"
@@ -46,14 +47,18 @@
         app:layout_constraintStart_toStartOf="@+id/textView_summonername"
         app:layout_constraintTop_toBottomOf="@+id/textView_summonername" />
 
-    <fragment
-        android:id="@+id/fragment_list"
-        android:name="net.zovguran.lolchampionmastery.MasteryPointsListFragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_temp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_profilePicture" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profilePicture"
+        tools:listitem="@layout/item_mastery" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

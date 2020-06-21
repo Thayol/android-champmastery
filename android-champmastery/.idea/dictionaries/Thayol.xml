@@ -2,6 +2,8 @@
   <dictionary name="Thayol">
     <words>
       <w>champid</w>
+      <w>champname</w>
+      <w>gson</w>
       <w>lolchampionmastery</w>
       <w>masteries</w>
       <w>rgapi</w>

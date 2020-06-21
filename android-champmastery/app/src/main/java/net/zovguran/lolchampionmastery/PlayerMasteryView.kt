@@ -4,6 +4,7 @@ import android.net.Uri.encode
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -32,6 +33,7 @@ class PlayerMasteryView : AppCompatActivity() {
         textView_summonerLevel.text = getString(R.string.player_level, "0")
 
         val summonername = intent.getStringExtra("summonername")
+        val fromStorage = intent.getBooleanExtra("fromStorage", false)
 
         val apiBase: String = getString(R.string.api_summoner_base)
         val apiKey: String = prefs.getString(API_KEY, null) ?: ""
@@ -41,23 +43,26 @@ class PlayerMasteryView : AppCompatActivity() {
                 "application/x-www-form-urlencoded"
             )}?api_key=$apiKey"
 
-        textView_temp.text = "Loading...\n$url"
+        // textView_temp.text = "Loading...\n$url"
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response -> playerLoaded(response) },
-            Response.ErrorListener { textView_summonername.setText("Error!") }
+            Response.ErrorListener {
+                textView_summonername.text = getString(R.string.fetch_error_1)
+                textView_summonerLevel.text = getString(R.string.fetch_error_2)
+            }
         )
         Volley.newRequestQueue(this).add(jsonObjectRequest)
     }
 
-    private fun playerLoaded(json: JSONObject)
-    {
-        textView_temp.text = json.toString()
+    private fun playerLoaded(json: JSONObject) {
+        // textView_temp.text = json.toString()
         val profileIconId: String = json.getString("profileIconId")
-        val summonerLevel: String = getString(R.string.player_level, json.getString("summonerLevel"))
+        val summonerLevel: String =
+            getString(R.string.player_level, json.getString("summonerLevel"))
         val summonername: String = json.getString("name")
         val profileIconBase: String = getString(R.string.api_static_icons_root)
-        val imageURL : String = "$profileIconBase$profileIconId.png"
+        val imageURL: String = "$profileIconBase$profileIconId.png"
         Picasso.get().load(imageURL).into(imageView_profilePicture)
         textView_summonername.text = summonername
         textView_summonerLevel.text = summonerLevel
@@ -68,12 +73,12 @@ class PlayerMasteryView : AppCompatActivity() {
         val apiKey: String = prefs.getString(API_KEY, null) ?: ""
         val url = "$apiBase$summonerId?api_key=$apiKey"
         val jsonObjectRequest = JsonArrayRequest(Request.Method.GET, url, null,
-            Response.Listener {response ->
+            Response.Listener { response ->
                 masteriesLoaded(response, summonerId, summonername)
                 // textView_temp.text = "${this.textView_temp.text}\n\n${response.toString()}"
             },
             Response.ErrorListener {
-                textView_temp.text = "${textView_temp.text}\n\n$url\n\n${it.toString()}"
+                // textView_temp.text = "${textView_temp.text}\n\n$url\n\n${it.toString()}"
             }
         )
         Volley.newRequestQueue(this).add(jsonObjectRequest)
@@ -93,16 +98,24 @@ class PlayerMasteryView : AppCompatActivity() {
             //val summonerId = obj.getString("summonerId")
             //textView_temp.text = "${textView_temp.text}\n$championId: $championPoints"
 
-            repository.insertMasteryRecord(MasteryRecord(
+            repository.insertMasteryRecord(
+                MasteryRecord(
                     summonerName = summonername,
                     summonerId = summonerId,
                     championId = championId,
                     championPoints = championPoints,
                     championLevel = championLevel
-                ))
+                )
+            )
         }
 
+        loadIdFromKey(applicationContext) // preload the json asset files
+        loadNameFromId(applicationContext)
+
         val masteryScore = repository.getMasteryScoreBySummonerId(summonerId)
-        textView_temp.text = masteryScore.joinToString(separator="\n")
+        recyclerView.adapter = MasteryItemAdapter(applicationContext, masteryScore)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+        // textView_temp.text = masteryScore.joinToString(separator = "\n")
     }
 }

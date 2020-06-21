@@ -3,6 +3,10 @@ package net.zovguran.lolchampionmastery.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import net.zovguran.lolchampionmastery.getIdFromKey
+import net.zovguran.lolchampionmastery.getNameFromId
+import net.zovguran.lolchampionmastery.getNameFromIdIfLoaded
+import kotlin.coroutines.coroutineContext
 
 @Entity(tableName = "mastery_records_table")
 data class MasteryRecord (
@@ -25,6 +29,6 @@ data class MasteryRecord (
     var championLevel: Int=0) {
 
     override fun toString(): String {
-        return "$summonerName: $championId ($championPoints points)"
+        return "[$summonerName] ${getNameFromIdIfLoaded(championId)}: $championPoints points (Level $championLevel)"
     }
 }

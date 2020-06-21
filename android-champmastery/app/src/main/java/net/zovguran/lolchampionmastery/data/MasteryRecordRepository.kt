@@ -10,6 +10,9 @@ class MasteryRecordRepository(private val masteryDatabaseDao: MasteryDatabaseDao
     {
         return masteryDatabaseDao.getLiveMasteryScoreBySummonerId(summonerId)
     }
+    fun getStoredSummonerNames() : List<String> {
+        return masteryDatabaseDao.getStoredSummonerNames()
+    }
 
     fun deleteMasteryRecordBySummonerId(summonerId: String) {
         masteryDatabaseDao.deleteMasteryRecordBySummonerId(summonerId)
