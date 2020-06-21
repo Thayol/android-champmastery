@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_second.*
+import net.zovguran.lolchampionmastery.data.MasteryDatabase
+import net.zovguran.lolchampionmastery.data.MasteryRecordRepository
 
 private const val API_KEY = "api_key"
 
@@ -38,6 +40,19 @@ class SecondFragment : Fragment() {
 
         button_cancel.setOnClickListener {
             closeSettings()
+        }
+
+        button_purge.setOnClickListener {
+            if (activity?.application != null) {
+                MasteryRecordRepository(
+                    MasteryDatabase.getDatabase(activity!!.application).masteryDatabaseDao()
+                ).purgeDatabase()
+                Snackbar.make(it, "Mastery database cleared.", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            } else {
+                Snackbar.make(it, "Database inaccessible!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
         }
 
         val apiKey: String? = prefs.getString(API_KEY, null)
