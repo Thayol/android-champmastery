@@ -11,7 +11,7 @@
     <string name="default_summonername">in Clitoris</string>
     <string name="placeholder_summonername">Loading…</string>
     <string name="player_level">Level %1$s</string>
-    <string name="offline_available_names">Offline available names:\n\n %1$s</string>
+    <string name="offline_available_names">Offline available names:\n\n%1$s</string>
 
     <string name="fetch_error_1">Invalid summoner name</string>
     <string name="fetch_error_2">or API key expired.</string>
