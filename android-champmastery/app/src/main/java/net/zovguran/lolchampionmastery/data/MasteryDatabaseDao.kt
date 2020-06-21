@@ -28,4 +28,7 @@ interface MasteryDatabaseDao {
 
     @Query("SELECT DISTINCT summoner_name FROM mastery_records_table")
     fun getStoredSummonerNames() : List<String>
+
+    @Query("SELECT * FROM mastery_records_table WHERE `REPLACE`(UPPER(summoner_name), ' ', '') = `REPLACE`(UPPER(:summonerName), ' ', '')")
+    fun getStoredMasteryScoresBySummonerName(summonerName: String) : List<MasteryRecord>
 }

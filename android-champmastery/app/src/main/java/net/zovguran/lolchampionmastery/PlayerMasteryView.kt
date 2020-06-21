@@ -1,8 +1,9 @@
 package net.zovguran.lolchampionmastery
 
 import android.net.Uri.encode
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -10,11 +11,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_player_mastery_view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import net.zovguran.lolchampionmastery.data.MasteryDatabase
 import net.zovguran.lolchampionmastery.data.MasteryRecord
 import net.zovguran.lolchampionmastery.data.MasteryRecordRepository
@@ -34,25 +32,39 @@ class PlayerMasteryView : AppCompatActivity() {
 
         val summonername = intent.getStringExtra("summonername")
         val fromStorage = intent.getBooleanExtra("fromStorage", false)
-
-        val apiBase: String = getString(R.string.api_summoner_base)
-        val apiKey: String = prefs.getString(API_KEY, null) ?: ""
-        val url: String =
-            "${apiBase}${encode(
-                summonername,
-                "application/x-www-form-urlencoded"
-            )}?api_key=$apiKey"
-
-        // textView_temp.text = "Loading...\n$url"
-
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
-            Response.Listener { response -> playerLoaded(response) },
-            Response.ErrorListener {
+        if (fromStorage) {
+            val repository: MasteryRecordRepository = MasteryRecordRepository(
+                MasteryDatabase.getDatabase(application).masteryDatabaseDao()
+            )
+            val records = repository.getStoredMasteryScoresBySummonerName(summonername ?: "")
+            textView_summonerLevel.text = getString(R.string.level_offline)
+            if (records.isNotEmpty())
+            {
+                textView_summonername.text = records.first().summonerName // for correct names
+                setupRecycler(records)
+            } else {
                 textView_summonername.text = getString(R.string.fetch_error_1)
-                textView_summonerLevel.text = getString(R.string.fetch_error_2)
             }
-        )
-        Volley.newRequestQueue(this).add(jsonObjectRequest)
+        } else {
+            val apiBase: String = getString(R.string.api_summoner_base)
+            val apiKey: String = prefs.getString(API_KEY, null) ?: ""
+            val url: String =
+                "${apiBase}${encode(
+                    summonername,
+                    "application/x-www-form-urlencoded"
+                )}?api_key=$apiKey"
+
+            // textView_temp.text = "Loading...\n$url"
+
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response -> playerLoaded(response) },
+                Response.ErrorListener {
+                    textView_summonername.text = getString(R.string.fetch_error_1)
+                    textView_summonerLevel.text = getString(R.string.fetch_error_2)
+                }
+            )
+            Volley.newRequestQueue(this).add(jsonObjectRequest)
+        }
     }
 
     private fun playerLoaded(json: JSONObject) {
@@ -63,7 +75,8 @@ class PlayerMasteryView : AppCompatActivity() {
         val summonername: String = json.getString("name")
         val profileIconBase: String = getString(R.string.api_static_icons_root)
         val imageURL: String = "$profileIconBase$profileIconId.png"
-        Picasso.get().load(imageURL).into(imageView_profilePicture)
+        Glide.with(this).load(imageURL).into(imageView_profilePicture)
+
         textView_summonername.text = summonername
         textView_summonerLevel.text = summonerLevel
 
@@ -109,13 +122,27 @@ class PlayerMasteryView : AppCompatActivity() {
             )
         }
 
+        val masteryScore = repository.getMasteryScoreBySummonerId(summonerId)
+        setupRecycler(masteryScore)
+        // textView_temp.text = masteryScore.joinToString(separator = "\n")
+    }
+
+    private fun setupRecycler(masteryRecords: List<MasteryRecord>)
+    {
         loadIdFromKey(applicationContext) // preload the json asset files
         loadNameFromId(applicationContext)
 
-        val masteryScore = repository.getMasteryScoreBySummonerId(summonerId)
-        recyclerView.adapter = MasteryItemAdapter(applicationContext, masteryScore)
+        val adapter = MasteryItemAdapter(applicationContext, masteryRecords)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-        // textView_temp.text = masteryScore.joinToString(separator = "\n")
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+            override fun onQueryTextSubmit(query: String?) = false
+        })
     }
 }

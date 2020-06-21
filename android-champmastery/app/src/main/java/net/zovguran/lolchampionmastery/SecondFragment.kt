@@ -19,8 +19,8 @@ private const val API_KEY = "api_key"
 class SecondFragment : Fragment() {
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false)
@@ -41,8 +41,7 @@ class SecondFragment : Fragment() {
         }
 
         val apiKey: String? = prefs.getString(API_KEY, null)
-        if (apiKey != null)
-        {
+        if (apiKey != null) {
             editText_apiKey.hint = apiKey
         }
 

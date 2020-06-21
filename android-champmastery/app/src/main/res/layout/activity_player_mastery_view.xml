@@ -7,13 +7,13 @@
     tools:context=".PlayerMasteryView">
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/textView_temp"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:autoLink="web"
         android:scrollbars="vertical"
         android:text="@string/not_available"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
@@ -44,6 +44,7 @@
         android:id="@+id/textView_summonerLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="web"
         app:layout_constraintStart_toStartOf="@+id/textView_summonername"
         app:layout_constraintTop_toBottomOf="@+id/textView_summonername" />
 
@@ -58,7 +59,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_profilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         tools:listitem="@layout/item_mastery" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profilePicture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

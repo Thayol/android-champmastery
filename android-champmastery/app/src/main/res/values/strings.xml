@@ -6,11 +6,12 @@
 
     <string name="api_summoner_base">https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/</string>
     <string name="api_mastery_base">https://eun1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/</string>
-    <string name="api_static_icons_root">http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/</string>
+    <string name="api_static_icons_root">https://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/</string>
 
     <string name="default_summonername">in Clitoris</string>
     <string name="placeholder_summonername">Loading…</string>
     <string name="player_level">Level %1$s</string>
+    <string name="offline_available_names">Offline available names:\n\n %1$s</string>
 
     <string name="fetch_error_1">Invalid summoner name</string>
     <string name="fetch_error_2">or API key expired.</string>
@@ -22,6 +23,7 @@
 
     <string name="placeholder_search">Summoner name (EUNE)</string>
     <string name="button_search">Search summoner</string>
+    <string name="button_offline_search">Offline search</string>
 
     <string name="button_save">Save</string>
 
@@ -40,4 +42,6 @@
     <string name="content_description_champion_icon">Champion Icon</string>
     <string name="placeholder_champion_name">Ahri</string>
     <string name="placeholder_champion_points">5 000 000</string>
+    <string name="switch_offline">Offline</string>
+    <string name="level_offline">Offline mode</string>
 </resources>

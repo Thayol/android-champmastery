@@ -19,7 +19,7 @@ fun getIdFromKey(context: Context, key: String) : String {
             jsonString = ""
         }
         val gson = Gson()
-        val mapType = object : TypeToken<Map<String, String>>() {}.type
+        // val mapType = object : TypeToken<Map<String, String>>() {}.type
         champidMap = gson.fromJson(jsonString, object : TypeToken<Map<String, Any>>() {}.type);
     }
 
@@ -43,7 +43,6 @@ fun getNameFromId(context: Context, id: String) : String {
             jsonString = ""
         }
         val gson = Gson()
-        val mapType = object : TypeToken<Map<String, String>>() {}.type
         champnameMap = gson.fromJson(jsonString, object : TypeToken<Map<String, Any>>() {}.type);
     }
 
