@@ -14,6 +14,9 @@ interface MasteryDatabaseDao {
     @Delete
     fun deleteMasteryRecord(masteryRecord: MasteryRecord)
 
+    @Query("DELETE FROM mastery_records_table WHERE 1 = 1") // note: it had bugs without WHERE
+    fun purgeDatabase()
+
     @Query("DELETE FROM mastery_records_table WHERE summoner_id = :summonerId")
     fun deleteMasteryRecordBySummonerId(summonerId: String)
 

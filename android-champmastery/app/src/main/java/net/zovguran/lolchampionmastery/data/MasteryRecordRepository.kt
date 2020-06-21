@@ -17,6 +17,10 @@ class MasteryRecordRepository(private val masteryDatabaseDao: MasteryDatabaseDao
         return masteryDatabaseDao.getStoredMasteryScoresBySummonerName(summonerName)
     }
 
+    fun purgeDatabase() {
+        masteryDatabaseDao.purgeDatabase()
+    }
+
     fun deleteMasteryRecordBySummonerId(summonerId: String) {
         masteryDatabaseDao.deleteMasteryRecordBySummonerId(summonerId)
     }
