@@ -12,14 +12,13 @@ fun getIdFromKey(context: Context, key: String) : String {
     if (champidMap == null) // lazy load
     {
         // from https://bezkoder.com/kotlin-android-read-json-file-assets-gson/
-        var jsonString: String
+        var jsonString: String = ""
         try {
             jsonString = context.assets.open("champid.json").bufferedReader().use { it.readText() }
         } catch (ioException: IOException) {
-            jsonString = ""
         }
         val gson = Gson()
-        // val mapType = object : TypeToken<Map<String, String>>() {}.type
+        // val mapType = object : TypeToken<Map<String, String>>() {}.type // the source included this, but i didn't need it
         champidMap = gson.fromJson(jsonString, object : TypeToken<Map<String, Any>>() {}.type);
     }
 
@@ -35,12 +34,10 @@ fun loadIdFromKey(context: Context) { // just a wrapper for untidy code
 fun getNameFromId(context: Context, id: String) : String {
     if (champnameMap == null) // lazy load
     {
-        // from https://bezkoder.com/kotlin-android-read-json-file-assets-gson/
-        var jsonString: String
+        var jsonString: String = ""
         try {
             jsonString = context.assets.open("champname.json").bufferedReader().use { it.readText() }
         } catch (ioException: IOException) {
-            jsonString = ""
         }
         val gson = Gson()
         champnameMap = gson.fromJson(jsonString, object : TypeToken<Map<String, Any>>() {}.type);

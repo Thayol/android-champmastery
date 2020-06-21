@@ -9,11 +9,14 @@ import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
 
+    // note: This minimum API level already handles data persistence on close/rotate.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        // this is a hidden button, it was a nice joke while it existed
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Can't touch this.", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -21,21 +24,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // this is important because "first fragment" handles the settings option
         return super.onOptionsItemSelected(item)
-        /*
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-        */
     }
 }

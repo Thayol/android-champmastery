@@ -28,24 +28,26 @@ class PlayerMasteryView : AppCompatActivity() {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
+        // uncomment the textView_temp parts and set visibility to visible to see very detailed messages on the UI
+
         textView_summonerLevel.text = getString(R.string.player_level, "0")
 
+        // get extras from the intent launching the activity
         val summonername = intent.getStringExtra("summonername")
         val fromStorage = intent.getBooleanExtra("fromStorage", false)
-        if (fromStorage) {
+        if (fromStorage) { // if in offline mode
             val repository: MasteryRecordRepository = MasteryRecordRepository(
                 MasteryDatabase.getDatabase(application).masteryDatabaseDao()
             )
             val records = repository.getStoredMasteryScoresBySummonerName(summonername ?: "")
             textView_summonerLevel.text = getString(R.string.level_offline)
-            if (records.isNotEmpty())
-            {
+            if (records.isNotEmpty()) {
                 textView_summonername.text = records.first().summonerName // for correct names
                 setupRecycler(records)
             } else {
                 textView_summonername.text = getString(R.string.fetch_error_1)
             }
-        } else {
+        } else { // if in online mode
             val apiBase: String = getString(R.string.api_summoner_base)
             val apiKey: String = prefs.getString(API_KEY, null) ?: ""
             val url: String =
@@ -67,6 +69,7 @@ class PlayerMasteryView : AppCompatActivity() {
         }
     }
 
+    // async called when the API server responds with player data
     private fun playerLoaded(json: JSONObject) {
         // textView_temp.text = json.toString()
         val profileIconId: String = json.getString("profileIconId")
@@ -97,6 +100,7 @@ class PlayerMasteryView : AppCompatActivity() {
         Volley.newRequestQueue(this).add(jsonObjectRequest)
     }
 
+    // async called when the mastery information response arrived
     private fun masteriesLoaded(json: JSONArray, summonerId: String, summonername: String) {
         val masteryDatabaseDao = MasteryDatabase.getDatabase(application).masteryDatabaseDao()
         val repository: MasteryRecordRepository = MasteryRecordRepository(masteryDatabaseDao)
@@ -127,8 +131,8 @@ class PlayerMasteryView : AppCompatActivity() {
         // textView_temp.text = masteryScore.joinToString(separator = "\n")
     }
 
-    private fun setupRecycler(masteryRecords: List<MasteryRecord>)
-    {
+    // factored out: both online and offline mode set up the recycler the same way
+    private fun setupRecycler(masteryRecords: List<MasteryRecord>) {
         loadIdFromKey(applicationContext) // preload the json asset files
         loadNameFromId(applicationContext)
 
@@ -142,6 +146,7 @@ class PlayerMasteryView : AppCompatActivity() {
                 adapter.filter.filter(newText)
                 return false
             }
+
             override fun onQueryTextSubmit(query: String?) = false
         })
     }

@@ -24,37 +24,42 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // load the key->value default data stored settings (to read and modify it)
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
+        // save button
         button_save.setOnClickListener {
             saveData()
             closeSettings()
         }
 
+        // cancel button
         button_cancel.setOnClickListener {
             closeSettings()
         }
 
+        // reset mastery database button
         button_purge.setOnClickListener {
+            // if there is an activity associated with the fragment, purge
             if (activity?.application != null) {
                 MasteryRecordRepository(
                     MasteryDatabase.getDatabase(activity!!.application).masteryDatabaseDao()
                 ).purgeDatabase()
                 Snackbar.make(it, "Mastery database cleared.", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                    .setAction("Action", null).show() // nice feedback snack
             } else {
                 Snackbar.make(it, "Database inaccessible!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                    .setAction("Action", null).show() // nice error snack
             }
         }
 
+        // use the loaded key->value storage to retrieve the API key
         val apiKey: String? = prefs.getString(API_KEY, null)
         if (apiKey != null) {
             editText_apiKey.hint = apiKey
@@ -63,6 +68,7 @@ class SecondFragment : Fragment() {
 
     }
 
+    // saveData() does not navigate activities/fragments!
     private fun saveData() {
         // only save if a new value has been entered
         if (editText_apiKey.text.toString() != "") {
@@ -73,16 +79,17 @@ class SecondFragment : Fragment() {
 
             view?.let {
                 Snackbar.make(it, "API key updated.", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                    .setAction("Action", null).show() // nice feedback snack
             }
         } else {
             view?.let {
                 Snackbar.make(it, "No API key was entered.", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                    .setAction("Action", null).show() // nice report snack
             }
         }
     }
 
+    // navigate back to the first fragment (+ pop up configured in the navigation xml)
     private fun closeSettings() {
         findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
     }
